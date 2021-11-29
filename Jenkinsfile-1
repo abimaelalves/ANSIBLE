@@ -5,7 +5,7 @@ pipeline {
     stage('Hello') {
       steps {
         sh '''
-          ansible 192.168.0.23 -i hosts -u vagrant -m ping
+          ansible 192.168.0.24 -i hosts -u ansibot -m ping
         '''
       }
     }

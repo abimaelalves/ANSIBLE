@@ -8,7 +8,7 @@ pipeline {
           ansible --version
           ansible-playbook --version
           ansible-galaxy --version
-          cat /var/jenkins_home/workspace/ansible/ansible/ansible.cfg
+          cat /var/jenkins_home/workspace/ansible/ansible.cfg
           ansible 192.168.50.10 -m ping -v 
         '''
       }

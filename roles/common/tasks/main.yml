@@ -1,0 +1,94 @@
+---
+# Configuracoes Gerais
+
+- name: Alteracao do /etc/profile
+  lineinfile: dest=/etc/profile line={{ item }}         # modulo lineinfile consegue definir Alteracao ou insercao de linhas em um arquivo
+  with_items:                                           # relacao da variavel item acima
+    - '# --- Variaveis e Alias Customizados ---#'       # definindo um comentario, ele vai jogar no final do arquivo
+    - 'export HISTFILEFORMAT="%d/%m/%Y - %H/%M/%S - "'  # definindo o formato do comando history
+    - 'export HISTSIZE="5000"'				# definindo o tamanho do historico 
+    - 'export HISTFILESIZE="5000"'			# tamanho que vai ter no arquivo history
+    - 'alias ls="ls -lh --color"'			# definindo alias, ele vai listar colorido permissoes e tamanho
+    - 'alias grep="grep -i --color"'                    # diferenciar case sensitive e trazer saida colorida
+    - 'alias vi="vim"'					# alias para vim
+    - 'alias rm="rm -i"'				# automanticamente coloca o modo interativo para pedir confirmacao no delete de algum arquivo
+
+- name: Desabilitando SELINUX de forma permanente
+  replace:	    # Modulo responsavel para substituir
+    dest: /etc/selinux/config	      # destino do arquivo
+    regexp: 'SELINUX=enforcing'        # identificando a linha que vai ser substituia pelo modulo replace abaixo
+    replace: 'SELINUX=disabled'       # alterando para SELINUX=disabled
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'	      # definindo condicoes para executar quando o SO for CentOS ou RedHat
+
+- name: Desabilitando SELINUX de forma temporaria
+  shell: setenforce 0            # Modulo shell executa um comando no linux, caso nao encontre um modulo para fazer essa tarefa
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+# Gerenciamento de pacotes e atualizacao do Sistema Operacional
+- name: Instalacao do repositorio epel-release # Epel repositorio importante para o SO, onde conseguimos instalar pacotes atraves dele
+  yum: name=epel-release state=latest
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Atualizacao do Sistema Operacional
+  yum: name=* state=latest update_cache=yes   # Atualização do SO e atualizar
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Instalacao de pacotes - RedHat/Centos
+  yum: name={{common_packages_redhat}} state=latest # Definindo e chamando uma variavel que ficará localizada do diretorio defaults com a lista de pacotes desejados
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Remocao de pacotes desncessarios
+  yum: name={{ item }} state=absent
+  with_items:
+    - firewalld
+    - NetworkManager
+    - NetworkManager-libnm
+    - postfix
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Atualizacao do Sistema Operacional
+  apt: update_cache=yes upgrade=yes
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Atualizacao de versao da distribuicao
+  apt: upgrade=dist
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Instalacao de pacotes - Debian
+  apt: name={{ common_packages_debian }} state=latest update_cache=yes
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+# Gerenciamento de usuarios
+- name: Criando o usuario treinamento
+  user:                 # modulo user, abaixo colocamos os parametros utilizando com sinal de =
+    name="treinamento"
+    comment="Treinamento Ansible" 
+    shell="/bin/bash"
+    home="/home/treinamento"
+    password="344db06e7ee931c79451d33eb9b2eb1a"
+
+# Definindo timezone
+- name: Configurando timezone
+  file: src=/usr/share/zoneinfo/America/Sao_Paulo dest=/etc/localtime state=link force=yes owner=root group=root   # com o modulo file ele vai buscar o arquivo localmente do seu ansible-master
+
+# Configuracoes de SSH
+- name: Configurando SSHD_CONFIG
+  lineinfile:               
+    dest=/etc/ssh/sshd_config 
+    state=present            
+    regexp={{ item.regexp }}
+    line={{ item.line }}   
+  with_items:
+    - { regexp: '#Port 22', line: 'Port 22' }   # no parametro regex seria a origem e no line o destino que vai mudar  
+    - { regexp: '#Banner none', line: 'Banner /etc/ssh/banner_ssh' } 
+    - { regexp: '#X11Fowarding yes', line: 'X11Fowarding no' }
+
+- name: Definindo protocolo versao 2 do SSH
+  lineinfile: dest=/etc/ssh/sshd_config line='Protocol 2'     # inserindo a linha Protocol 2 no arquivo /etc/ssh/sshd/sshd_config
+
+- name: Adicionando o Motd
+  template: src=motd dest=/etc/motd force=yes owner=root group=root mode=0755
+  notify:
+    - Restart SSH
+
+...

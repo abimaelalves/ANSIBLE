@@ -1,0 +1,33 @@
+---
+common_packages_redhat:
+  - vim
+#  - "Development Tools"
+  - net-tools
+  - nmap 
+  - wget
+  - unzip
+  - iotop
+  - telnet
+  - zip
+  - tcpdump
+  - iptables-services
+  - net-tools
+  - perl-version
+  - perl-Data-Dumper
+  - tmux
+  - htop
+
+common_packages_debian:
+  - vim
+#  - "Development Tools"
+  - net-tools
+  - nmap
+  - wget
+  - unzip
+  - iotop
+  - telnet
+  - zip
+  - tcpdump
+  - net-tools
+  - tmux
+  - htop

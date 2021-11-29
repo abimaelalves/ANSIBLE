@@ -8,6 +8,7 @@ pipeline {
           ansible --version
           ansible-playbook --version
           ansible-galaxy --version
+          cat /var/jenkins_home/workspace/ansible/ansible.cfg
         '''
       }
     }

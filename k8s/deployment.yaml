@@ -43,7 +43,7 @@ spec:
       serviceAccountName: jenkins
       containers:
       - name: jenkins
-        image: abimasantos/jenkins-jdk-8u191:v1
+        image: abimasantos/jenkins-jdk-8u191-ansible:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS

@@ -3,7 +3,7 @@ ansible_ssh_user: ansibot
 ansible_ssh_pass: PMOasmoasdfQWEasd1231231231
 ansible_become: yes
 ansible_become_method: sudo
-ansible_become_user: ansibot
+ansible_become_user: root
 ansible_become_pass: PMOasmoasdfQWEasd1231231231
 ansible_connection: ssh
 ansible_shell_executable: /bin/bash

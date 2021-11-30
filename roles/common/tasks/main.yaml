@@ -46,18 +46,6 @@
     - postfix
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
-- name: Atualizacao do Sistema Operacional
-  apt: update_cache=yes upgrade=yes
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
-- name: Atualizacao de versao da distribuicao
-  apt: upgrade=dist
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
-- name: Instalacao de pacotes - Debian
-  apt: name={{ common_packages_debian }} state=latest update_cache=yes
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
 # Gerenciamento de usuarios
 - name: Criando o usuario treinamento
   user:                 # modulo user, abaixo colocamos os parametros utilizando com sinal de =

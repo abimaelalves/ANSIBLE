@@ -1,1 +1,2 @@
-192.168.0.24
+[servidores]
+ansible_ssh_host=192.168.0.24 ansible_ssh_user=ansibot ansibot_ssh_pass=H2hI-meS8_sihj28ksIHsbb.Ol,TiKEx/$

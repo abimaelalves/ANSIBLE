@@ -1,5 +1,5 @@
 =========================================
-	    Treinamento Ansible
+	    MOTD
 
 Host: "{{ ansible_hostname }}"
 IP Address: "{{ ansible_default_ipv4 }}"

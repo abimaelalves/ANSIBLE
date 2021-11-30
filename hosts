@@ -1,2 +1,2 @@
 [servidores]
-mysql ansible_ssh_host=192.168.0.24 ansible_ssh_user=ansibot ansible_ssh_pass=PMOasmoasdfQWEasd1231231231
+mysql ansible_ssh_host=192.168.0.24 ansible_ssh_user=ansibot ansible_ssh_pass=PMOasmoasdfQWEasd1231231231 ansible_become=yes ansible_become_method=sudo ansible_become_user=ansibot ansible_become_pass=PMOasmoasdfQWEasd1231231231

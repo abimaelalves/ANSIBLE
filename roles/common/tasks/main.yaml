@@ -34,7 +34,7 @@
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Instalacao de pacotes - RedHat/Centos
-  yum: name={{common_packages_redhat}} state=latest # Definindo e chamando uma variavel que ficará localizada do diretorio defaults com a lista de pacotes desejados
+  yum: name={{common_packages}} state=latest # Definindo e chamando uma variavel que ficará localizada do diretorio defaults com a lista de pacotes desejados
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Remocao de pacotes desncessarios

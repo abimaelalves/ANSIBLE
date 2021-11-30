@@ -5,7 +5,7 @@ pipeline {
     stage('Install via Playbook') {
       steps {
         sh '''
-          ansible-playbook -i hosts playbook.yml --check
+          ansible-playbook -i hosts playbook.yaml --check
         '''
       }
     }

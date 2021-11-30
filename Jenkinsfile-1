@@ -2,10 +2,10 @@ pipeline {
   agent any
 
   stages {
-    stage('Test Ping') {
+    stage('Install via Playbook') {
       steps {
         sh '''
-          ansible-playbook -i hosts playbook.yml 
+          ansible-playbook -i hosts playbook.yml --check
         '''
       }
     }

@@ -15,4 +15,3 @@ common_packages:
   - perl-version
   - perl-Data-Dumper
   - tmux
-  - htop

@@ -1,0 +1,18 @@
+---
+common_packages:
+  - vim
+#  - "Development Tools"
+  - net-tools
+  - nmap 
+  - wget
+  - unzip
+  - iotop
+  - telnet
+  - zip
+  - tcpdump
+  - iptables-services
+  - net-tools
+  - perl-version
+  - perl-Data-Dumper
+  - tmux
+  - htop
